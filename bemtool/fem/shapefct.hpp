@@ -148,7 +148,6 @@ typedef GradBasisFct<P1_2D> Grad_P1_2D;
 typedef GradBasisFct<P1_3D> Grad_P1_3D;
 
 
-
 /*============
   FONCTIONS P2
   ============*/
@@ -497,6 +496,26 @@ public:
 };
 
 typedef DivBasisFct<RT0_2D> Div_RT0_2D;
+
+/* define a dummy GradBasisFct for P0 to fix compile errors */
+template <int D>
+class GradBasisFct< BasisFct<P0,D> >{
+  R3 dummy;
+public:
+  GradBasisFct< BasisFct<P1,D> >(const Mesh<D>& m) {
+    std::cerr << "ERROR: we should not be here" << std::endl;
+    assert(0);
+  }
+  void Assign(const int& j){
+    std::cerr << "ERROR: we should not be here" << std::endl;
+    assert(0);
+  }
+  const R3& operator()(const int& j, const array<D,Real>& x = 0.) const {
+    std::cerr << "ERROR: we should not be here" << std::endl;
+    assert(0);
+    return dummy;
+  }
+};
 
 } // namespace bemtool
 
