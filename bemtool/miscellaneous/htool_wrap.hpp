@@ -19,7 +19,7 @@ class BIO_Generator : public htool::VirtualGenerator<Cplx>{
   Cplx multiply_coeff; // true kernel = multiply_coeff*(bemmtool_kernel)
 
 public:
-    BIO_Generator(const Dof<TargetDiscretization>& dof0, const double& kappa, const Cplx& coeff1=1.0+1i*0.0):VirtualGenerator(NbDof(dof0),NbDof(dof0)), target_dof(dof0), source_dof(dof0),subV(target_dof,source_dof,kappa),multiply_coeff(coeff1) { if (!std::same<TargetDiscretization,SourceDiscretization>::value){std::cout << "BemTool error: constructor with one dof given with two different type of discretization." << std::endl; assert(0);}}
+    BIO_Generator(const Dof<TargetDiscretization>& dof0, const double& kappa, const Cplx& coeff1=1.0+1i*0.0):VirtualGenerator(NbDof(dof0),NbDof(dof0)), target_dof(dof0), source_dof(dof0),subV(target_dof,source_dof,kappa),multiply_coeff(coeff1) { if (!std::is_same<TargetDiscretization,SourceDiscretization>::value){std::cout << "BemTool error: constructor with one dof given with two different type of discretization." << std::endl; assert(0);}}
 
     BIO_Generator(const Dof<TargetDiscretization>& target_dof0, const Dof<SourceDiscretization>& source_dof0, const double& kappa, const Cplx& coeff1=1.0+1i*0.0):VirtualGenerator(NbDof(target_dof0),NbDof(source_dof0)), target_dof(target_dof0), source_dof(source_dof0), subV(target_dof,source_dof,kappa),multiply_coeff(coeff1) {}
     // {boundary=is_boundary_nodes(dof);}
@@ -61,7 +61,7 @@ class BIO_Generator_w_mass : public htool::VirtualGenerator<Cplx>{
   Cplx alpha; // true kernel = alpha*(bemmtool_kernel) + coef*w_mass
 
 public:
-    BIO_Generator_w_mass(const Dof<TargetDiscretization>& dof0, const double& kappa, const Cplx& coef0, const Cplx& alpha0 =1.0+1i*0.0):VirtualGenerator(NbDof(dof0),NbDof(dof0)), target_dof(dof0), source_dof(dof0),subV(target_dof,source_dof,kappa),coef(coef0),alpha(alpha0) {if (!std::same<TargetDiscretization,SourceDiscretization>::value){std::cout << "BemTool error: constructor with one dof given with two different type of discretization." << std::endl; assert(0);}}
+    BIO_Generator_w_mass(const Dof<TargetDiscretization>& dof0, const double& kappa, const Cplx& coef0, const Cplx& alpha0 =1.0+1i*0.0):VirtualGenerator(NbDof(dof0),NbDof(dof0)), target_dof(dof0), source_dof(dof0),subV(target_dof,source_dof,kappa),coef(coef0),alpha(alpha0) {if (!std::is_same<TargetDiscretization,SourceDiscretization>::value){std::cout << "BemTool error: constructor with one dof given with two different type of discretization." << std::endl; assert(0);}}
     
     BIO_Generator_w_mass(const Dof<TargetDiscretization>& target_dof0, const Dof<SourceDiscretization>& source_dof0, const double& kappa, const Cplx& coef0, const Cplx& alpha0 =1.0+1i*0.0):VirtualGenerator(NbDof(target_dof0),NbDof(source_dof0)), target_dof(target_dof0), source_dof(source_dof0),subV(target_dof,source_dof,kappa),coef(coef0),alpha(alpha0) {}
     // {boundary=is_boundary_nodes(dof);}
@@ -108,9 +108,9 @@ class Combined_BIO_Generator : public htool::VirtualGenerator<Cplx>{
 
 public:
 
-    Combined_BIO_Generator(const Dof<TargetDiscretization>& dof0, const double& kappa,const Cplx& coef1,const Cplx& coef2,const Cplx& mass_coef0):VirtualGenerator(NbDof(dof0),NbDof(dof0)), target_dof(dof0), source_dof(dof0),sub1(target_dof,source_dof,kappa),sub2(target_dof,source_dof,kappa),combined_coef_1(coef1), combined_coef_2(coef2),mass_coef(mass_coef0) {if (!std::same<TargetDiscretization,SourceDiscretization>::value){std::cout << "BemTool error: constructor with one dof given with two different type of discretization." << std::endl; assert(0);}}
+    Combined_BIO_Generator(const Dof<TargetDiscretization>& dof0, const double& kappa,const Cplx& coef1,const Cplx& coef2,const Cplx& mass_coef0):VirtualGenerator(NbDof(dof0),NbDof(dof0)), target_dof(dof0), source_dof(dof0),sub1(target_dof,source_dof,kappa),sub2(target_dof,source_dof,kappa),combined_coef_1(coef1), combined_coef_2(coef2),mass_coef(mass_coef0) {if (!std::is_same<TargetDiscretization,SourceDiscretization>::value){std::cout << "BemTool error: constructor with one dof given with two different type of discretization." << std::endl; assert(0);}}
     
-    Combined_BIO_Generator(const Dof<TargetDiscretization>& dof0, const double& kappa,const Cplx& coef1,const double& mass_coef0):VirtualGenerator(NbDof(dof0),NbDof(dof0)), target_dof(dof0), source_dof(dof0),sub1(target_dof,source_dof,kappa),sub2(target_dof,source_dof,kappa),combined_coef_1(coef1), combined_coef_2(1),mass_coef(mass_coef0) {if (!std::same<TargetDiscretization,SourceDiscretization>::value){std::cout << "BemTool error: constructor with one dof given with two different type of discretization." << std::endl; assert(0);}}
+    Combined_BIO_Generator(const Dof<TargetDiscretization>& dof0, const double& kappa,const Cplx& coef1,const double& mass_coef0):VirtualGenerator(NbDof(dof0),NbDof(dof0)), target_dof(dof0), source_dof(dof0),sub1(target_dof,source_dof,kappa),sub2(target_dof,source_dof,kappa),combined_coef_1(coef1), combined_coef_2(1),mass_coef(mass_coef0) {if (!std::is_same<TargetDiscretization,SourceDiscretization>::value){std::cout << "BemTool error: constructor with one dof given with two different type of discretization." << std::endl; assert(0);}}
 
     Combined_BIO_Generator(const Dof<TargetDiscretization>& target_dof0, const Dof<SourceDiscretization>& source_dof0, const double& kappa,const Cplx& coef1,const Cplx& coef2,const Cplx& mass_coef0):VirtualGenerator(NbDof(target_dof0),NbDof(source_dof0)), target_dof(target_dof0), source_dof(source_dof0),sub1(target_dof,source_dof,kappa),sub2(target_dof,source_dof,kappa),combined_coef_1(coef1), combined_coef_2(coef2),mass_coef(mass_coef0) {}
     
