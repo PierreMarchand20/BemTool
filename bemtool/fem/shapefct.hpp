@@ -502,7 +502,7 @@ template <int D>
 class GradBasisFct< BasisFct<P0,D> >{
   R3 dummy;
 public:
-  GradBasisFct< BasisFct<P1,D> >(const Mesh<D>& m) {
+  GradBasisFct< BasisFct<P0,D> >(const Mesh<D>& m) {
     std::cerr << "ERROR: we should not be here" << std::endl;
     assert(0);
   }
