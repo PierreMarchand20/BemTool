@@ -360,7 +360,7 @@ namespace bemtool{
         }
         
         void setNodesGeomety(Geometry& myg) {
-            this->node=myg;
+            this->node=&myg;
         }
         
         // geometry and element vectors setter AF 07/2019
