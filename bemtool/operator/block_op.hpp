@@ -23,6 +23,7 @@
 #include <map>
 #include <iostream>
 #include "operator.hpp"
+#include "../fem/fem.hpp"
 
 namespace bemtool {
 

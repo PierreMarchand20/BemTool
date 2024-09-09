@@ -6,6 +6,7 @@
 #include <bemtool/operator/operator.hpp>
 #include <bemtool/operator/block_op.hpp>
 #include <bemtool/potential/potential.hpp>
+#include <bemtool/potential/maxwell_pot.hpp>
 
 namespace bemtool
 {
@@ -19,7 +20,7 @@ namespace bemtool
     Cplx multiply_coeff; // true kernel = multiply_coeff*(bemmtool_kernel)
 
   public:
-    BIO_Generator(const Dof<Discretization> &dof0, const double &kappa, const Cplx &coeff1 = 1.0 + 1i * 0.0)
+    BIO_Generator(const Dof<Discretization> &dof0, const double &kappa, const Cplx &coeff1 = Cplx(1.0 , 0.0))
         : VirtualGeneratorInUserNumbering(), dof(dof0), subV(dof, dof, kappa), multiply_coeff(coeff1) {}
     // {boundary=is_boundary_nodes(dof);}
 
@@ -94,7 +95,7 @@ namespace bemtool
   class BIO_Generator<BIOpKernel<K, HS_OP, 2, P0_1D, P0_1D>, P0_1D> : public htool::VirtualGeneratorInUserNumbering<Cplx>
   {
   public:
-    BIO_Generator(const Dof<P0_1D> &dof0, const double &kappa, const Cplx &coeff1 = 1.0 + 1i * 0.0) : VirtualGeneratorInUserNumbering()
+    BIO_Generator(const Dof<P0_1D> &dof0, const double &kappa, const Cplx &coeff1 = Cplx(1.0 , 0.0)) : VirtualGeneratorInUserNumbering()
     {
       std::cout << "BemTool error: cannot use P0 discretization with Hyper Singular operator." << std::endl;
       assert(0);
@@ -105,7 +106,7 @@ namespace bemtool
   class BIO_Generator<BIOpKernel<K, HS_OP, 3, P0_2D, P0_2D>, P0_2D> : public htool::VirtualGeneratorInUserNumbering<Cplx>
   {
   public:
-    BIO_Generator(const Dof<P0_2D> &dof0, const double &kappa, const Cplx &coeff1 = 1.0 + 1i * 0.0) : VirtualGeneratorInUserNumbering()
+    BIO_Generator(const Dof<P0_2D> &dof0, const double &kappa, const Cplx &coeff1 = Cplx(1.0 , 0.0)) : VirtualGeneratorInUserNumbering()
     {
       std::cout << "BemTool error: cannot use P0 discretization with Hyper Singular operator." << std::endl;
       assert(0);
@@ -123,7 +124,7 @@ namespace bemtool
     Cplx alpha; // true kernel = alpha*(bemmtool_kernel) + coef*w_mass
 
   public:
-    BIO_Generator_w_mass(const Dof<Discretization> &dof0, const double &kappa, const Cplx &coef0, const Cplx &alpha0 = 1.0 + 1i * 0.0)
+    BIO_Generator_w_mass(const Dof<Discretization> &dof0, const double &kappa, const Cplx &coef0, const Cplx &alpha0 = Cplx(1.0 , 0.0))
         : VirtualGeneratorInUserNumbering(), dof(dof0), subV(dof, dof, kappa), coef(coef0), alpha(alpha0) {}
     // {boundary=is_boundary_nodes(dof);}
 
@@ -145,7 +146,7 @@ namespace bemtool
   class BIO_Generator_w_mass<BIOpKernel<K, HS_OP, 2, P0_1D, P0_1D>, P0_1D> : public htool::VirtualGeneratorInUserNumbering<Cplx>
   {
   public:
-    BIO_Generator_w_mass(const Dof<P0_1D> &dof0, const double &kappa, const Cplx &coef0, const Cplx &alpha0 = 1.0 + 1i * 0.0) : VirtualGeneratorInUserNumbering()
+    BIO_Generator_w_mass(const Dof<P0_1D> &dof0, const double &kappa, const Cplx &coef0, const Cplx &alpha0 = Cplx(1.0 , 0.0)) : VirtualGeneratorInUserNumbering()
     {
       std::cout << "BemTool error: cannot use P0 discretization with Hyper Singular operator." << std::endl;
       assert(0);
@@ -156,7 +157,7 @@ namespace bemtool
   class BIO_Generator_w_mass<BIOpKernel<K, HS_OP, 3, P0_2D, P0_2D>, P0_2D> : public htool::VirtualGeneratorInUserNumbering<Cplx>
   {
   public:
-    BIO_Generator_w_mass(const Dof<P0_2D> &dof0, const double &kappa, const Cplx &coef0, const Cplx &alpha0 = 1.0 + 1i * 0.0) : VirtualGeneratorInUserNumbering()
+    BIO_Generator_w_mass(const Dof<P0_2D> &dof0, const double &kappa, const Cplx &coef0, const Cplx &alpha0 = Cplx(1.0 , 0.0)) : VirtualGeneratorInUserNumbering()
     {
       std::cout << "BemTool error: cannot use P0 discretization with Hyper Singular operator." << std::endl;
       assert(0);
