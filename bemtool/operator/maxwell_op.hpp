@@ -104,6 +104,80 @@ public:
 
 typedef BIOpKernel<MA,SL_OP,3,RT0_2D,RT0_2D> EFIE_RT0xRT0;
 
+// Maxwell Yukawa
+
+template <typename PhiX, typename PhiY>
+class BIOpKernel<MA_YU,SL_OP,3,PhiX,PhiY>{
+
+public:
+  typedef BIOpKernelTraits<MA_YU,SL_OP,3,PhiX,PhiY> Trait;
+
+private:
+  const typename Trait::MeshX&      meshx;
+  const typename Trait::MeshY&      meshy;
+        typename Trait::MatType     inter;
+        typename Trait::JacX        dx;
+        typename Trait::JacY        dy;
+        typename Trait::DivPhiX     div_phix;
+        typename Trait::DivPhiY     div_phiy;
+                        PhiX        phix;
+                        PhiY        phiy;
+  const                 Real        kappa, inv_kappa2;
+                        R3          x0_y0,x_y,nx,ny;
+                        Real        h,r;
+                        Cplx        ker,val,val2;
+
+public:
+  BIOpKernel<MA_YU,SL_OP,3,PhiX,PhiY>(const typename Trait::MeshX& mx,
+				   const typename Trait::MeshY& my,
+				   const Real& k):
+  meshx(mx), phix(mx), div_phix(mx), meshy(my), phiy(my), div_phiy(my),
+    kappa(k), inv_kappa2( 1./(kappa*kappa) ) {};
+
+
+  inline void Assign(const int& ix, const int& iy){
+    const typename Trait::EltX& ex=meshx[ix];
+    const typename Trait::EltY& ey=meshy[iy];
+    phix.Assign(ix);
+    phiy.Assign(iy);
+    div_phix.Assign(ix);
+    div_phiy.Assign(iy);
+    h     = DetJac(ex)*DetJac(ey);
+    x0_y0 = ex[0]-ey[0];
+    dx    = MatJac(ex);
+    dy    = MatJac(ey);
+  }
+
+
+  inline const typename Trait::MatType&
+  operator()(const typename Trait::Rdx& tx,
+	     const typename Trait::Rdy& ty){
+    x_y = x0_y0 + dx*tx-dy*ty;
+    r   = norm2(x_y);
+    ker = h*exp(-kappa*r)/(4*pi*r);
+    for(int j=0; j<Trait::nb_dof_x; j++){
+      for(int k=0; k<Trait::nb_dof_y; k++){
+	val = ( phix(j,tx),phiy(k,ty) )*ker;
+	inter(j,k) = val + inv_kappa2*div_phix(j,tx)*div_phiy(k,ty)*ker;
+      }
+    }
+    return inter;
+  }
+
+
+  inline const Cplx&
+  operator()(const typename Trait::Rdx& tx,
+	     const typename Trait::Rdy& ty,
+	     const int& kx, const int& ky){
+    x_y = x0_y0 + dx*tx-dy*ty;
+    r   = norm2(x_y);
+    ker = h*exp(-kappa*r)/(4*pi*r);
+    val = ( phix(kx,tx),phiy(ky,ty) )*ker;
+    return val2 = val + inv_kappa2*div_phix(kx,tx)*div_phiy(ky,ty)*ker;
+  }
+
+
+};
 
 /*====
   MFIE
