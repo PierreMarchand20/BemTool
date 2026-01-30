@@ -90,7 +90,8 @@ public:
 
     for(int p=0; p<dimx+1; p++){
       for(int q=rule; q<dimy+1; q++){
-	if( &ex[p]==&ey[q] ){
+	if( (ex[p][0]==ey[q][0]) && (ex[p][1]==ey[q][1]) && (ex[p][2]==ey[q][2]) ){
+
 	  Swap(ex,rule,p); Swap(bx,rule,p);
 	  Swap(ey,rule,q); Swap(by,rule,q);
 	  rule++; break;
