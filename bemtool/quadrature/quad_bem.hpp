@@ -338,7 +338,7 @@ namespace bemtool{
     n = (int) ceil((order+1)/2.0);
     Quad1D(n,x1,w1);     q1 = x1.size();
     hp_quad1D(n,x2,w2);  q2 = x2.size();
-    Quad1D(n,x3,w3);     q3 = x3.size();
+    Quad1D(3,x3,w3);     q3 = x3.size();
 
     //////////////////////////
     //   Elements disjoints
