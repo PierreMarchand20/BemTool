@@ -76,9 +76,9 @@ private:
   Cplx         val,val2;
 
 public:
-  BIOp<KernelType>(const MeshX& mx, const MeshY& my, const Real& k):
+  BIOp<KernelType>(const MeshX& mx, const MeshY& my, const Real& k, const int& qforder = 6):
   meshx(mx), nodex(GeometryOf(mx)), ker(mx,my,k),
-    meshy(my), nodey(GeometryOf(my)), qr(6) {
+    meshy(my), nodey(GeometryOf(my)), qr(qforder) {
     for(int j=0; j<dimx; j++){ax[j+1][j]=1;}
     for(int j=0; j<dimy; j++){ay[j+1][j]=1;}
   };
