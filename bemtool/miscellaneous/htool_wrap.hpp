@@ -11,7 +11,7 @@
 namespace bemtool
 {
 
-  template <typename KernelType, typename DiscretizationX, typename DiscretizationY>
+  template <typename KernelType, typename DiscretizationX, typename DiscretizationY=DiscretizationX>
   class BIO_Generator : public htool::VirtualGenerator<Cplx>
   {
     Dof<DiscretizationX> dofX;
@@ -94,7 +94,7 @@ namespace bemtool
     }
   };
 
-  template <typename KernelType, typename DiscretizationX, typename DiscretizationY>
+  template <typename KernelType, typename DiscretizationX, typename DiscretizationY=DiscretizationX>
   class BIO_Generator_w_mass : public htool::VirtualGenerator<Cplx>
   {
     Dof<DiscretizationX> dofX;
@@ -125,7 +125,7 @@ namespace bemtool
     }
   };
 
-  template <typename KernelType1, typename KernelType2, typename DiscretizationX, typename DiscretizationY>
+  template <typename KernelType1, typename KernelType2, typename DiscretizationX, typename DiscretizationY=DiscretizationX>
   class Combined_BIO_Generator : public htool::VirtualGenerator<Cplx>
   {
     Dof<DiscretizationX> dofX;
