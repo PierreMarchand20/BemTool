@@ -65,6 +65,15 @@ typedef BasisFct<P0,1> P0_1D;
 typedef BasisFct<P0,2> P0_2D;
 typedef BasisFct<P0,3> P0_3D;
 
+template <int D>
+class GradBasisFct< BasisFct<P0,D> > {
+typedef array<D,Real> Rd;
+void throwerr() const {std::cout << "BemTool error: no GradBasisFct for P0. This error can arise when trying to use P0 discretization with Hyper Singular operator." << std::endl; std::exit(EXIT_FAILURE);}
+public:
+  GradBasisFct< BasisFct<P0,D> >(const Mesh<D>& m) {throwerr();}
+  void Assign(const int& j){throwerr();}
+  R3 operator()(const int& j, const Rd& x) const {throwerr(); return R3();}
+};
 
 /*============
   FONCTIONS P1
